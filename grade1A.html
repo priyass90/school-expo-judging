@@ -7,7 +7,12 @@
 
 <h2>Dummy Expo Form – Grade 1A</h2>
 
-<form onsubmit="submitToSheet(event)">
+<form
+  action="PASTE_YOUR_SCRIPT_URL_HERE"
+  method="POST"
+  target="hiddenFrame"
+  onsubmit="submitted()"
+>
 
   <label>Judge Name</label><br>
   <select name="judge_name" required>
@@ -24,30 +29,14 @@
   <input type="number" name="total1" required><br><br>
 
   <button type="submit">Submit</button>
-
 </form>
 
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfVI6cj6Hr4S43St_C9Ki-O1cxv3pyb-lGrbCsm4Gf97iwIXP3GIFETN4ECr6aWrkD/exec";
-
-function submitToSheet(event) {
-  event.preventDefault();
-
-  const data = {};
-  document.querySelectorAll('input, select').forEach(el => {
-    if (el.name) data[el.name] = el.value;
-  });
-
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.text())
-  .then(() => alert("✅ Submitted"))
-  .catch(() => alert("❌ Failed"));
+function submitted() {
+  alert("✅ Submitted successfully");
 }
 </script>
-
 </body>
 </html>
