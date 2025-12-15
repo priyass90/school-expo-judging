@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expo Judging Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; padding:15px; }
+    .box { background:#fff; padding:15px; border-radius:8px; max-width:1000px; margin:auto; }
+    label { font-weight:bold; }
+    select, input { width:100%; padding:6px; margin-bottom:10px; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:6px; text-align:center; }
+    th { background:#eef1f5; }
+    button { padding:12px 25px; font-size:16px; background:#007bff; color:#fff; border:none; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+<h2>School Expo – Judging Form</h2>
+
+<label>Judge Name</label>
+<select name="judge_name">
+  <option value="">Select Judge</option>
+  <option>Judge 1</option>
+  <option>Judge 2</option>
+</select>
+
+<label>Class & Section</label>
+<select name="class_section">
+  <option value="">Select Class</option>
+  <option>7A</option>
+  <option>7B</option>
+  <option>8A</option>
+</select>
+
+<h3>Student Assessment</h3>
+
+<table>
+<tr>
+  <th>Student</th>
+  <th>Subject</th>
+  <th>Rubric 1</th>
+  <th>Rubric 2</th>
+  <th>Rubric 3</th>
+  <th>Total</th>
+</tr>
+
+<tr>
+  <td>
+    <select class="student-select" name="student1" onchange="updateStudents()"></select>
+  </td>
+  <td>
+    <select name="subject1">
+      <option>Math</option>
+      <option>Science</option>
+    </select>
+  </td>
+  <td><select name="r1_1" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+  <td><select name="r1_2" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+  <td><select name="r1_3" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+  <td><input type="text" name="total1" id="total1" readonly></td>
+</tr>
+</table>
+
+<br>
+<form onsubmit="submitToSheet(event)">
+  <!-- ALL your form content here -->
+  <button type="submit">Submit</button>
+</form>
+</div>
+
+<script>
+const students = ["Aarav","Ananya","Diya","Ishaan","Kabir","Meera","Rohan","Saanvi","Tanvi","Vihaan","Yash","Zoya"];
+
+function populateStudents() {
+  document.querySelectorAll('.student-select').forEach(sel => {
+    sel.innerHTML = '<option value="">Select Student</option>';
+    students.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s; o.textContent = s;
+      sel.appendChild(o);
+    });
+  });
+}
+
+function updateStudents() {
+  const selected = Array.from(document.querySelectorAll('.student-select')).map(s=>s.value);
+  document.querySelectorAll('.student-select').forEach(sel => {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Select Student</option>';
+    students.forEach(s => {
+      if (!selected.includes(s) || s===cur) {
+        const o=document.createElement('option'); o.value=s; o.textContent=s;
+        if (s===cur) o.selected=true;
+        sel.appendChild(o);
+      }
+    });
+  });
+}
+
+function calcTotal(n){
+  let t=0;
+  for(let i=1;i<=3;i++){
+    const v=document.querySelector(`[name=r${n}_${i}]`).value;
+    if(v!=='AB') t+=Number(v);
+  }
+  document.getElementById('total'+n).value=t;
+}
+
+populateStudents();
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweLOg_tLfkXu4hS3cL7wsOtcu47W7W9yiJAPR6bx4-EBQ9GGxlBPqmsHPRfkkGZ4oBKg/exec";
+function submitToSheet(event) {
+  event.preventDefault();   // stop page reload
+
+  const data = {};
+  document.querySelectorAll('input, select').forEach(el => {
+    if (el.name) data[el.name] = el.value;
+  });
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.text())
+  .then(() => alert("✅ Submitted successfully"))
+  .catch(err => {
+    alert("❌ Submission failed");
+    console.error(err);
+  });
+}
+</script>
+
+</body>
+</html>
