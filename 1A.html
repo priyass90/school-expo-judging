@@ -20,11 +20,12 @@
 <h2>talkSTEM Judging Sheet – Class 1A</h2>
 
 <form
-  action="https://script.google.com/macros/s/AKfycbxqgupkdfg9jr1yovKGUxJqhUfr3ERlQ3Gy7Kqg1pUFc6ym9YfGp1WN1BqGrt_TOj1N/exec"
+  action="https://script.google.com/macros/s/AKfycbwEcA3uhCoDWFVV96O5oWVlmXbrziEzq0IgTX_R90fdm2-ZbIR7kvyhSP9c5vuMq3Iz/exec*"
   method="POST"
   target="hiddenFrame"
-  onsubmit="submitted()"
+  onsubmit="handleSubmit()"
 >
+
 
 <label>Judge Name</label>
 <select name="judge_name" required>
@@ -103,7 +104,7 @@
 <button type="submit">Submit</button>
 </form>
 
-<iframe name="hiddenFrame" style="display:none;"></iframe>
+<iframe name="hiddenFrame" style="display:none;" onload="handleResponse()"></iframe>
 </div>
 
 <script>
@@ -162,6 +163,29 @@ function submitted() {
 
 populateStudents();
 </script>
+<script>
+let submitted = false;
 
+function handleSubmit() {
+  submitted = true;
+}
+
+function handleResponse() {
+  if (!submitted) return;
+
+  const iframe = document.getElementsByName("hiddenFrame")[0];
+  const response = iframe.contentDocument.body.innerText;
+
+  if (response === "ALREADY_SUBMITTED") {
+    alert("❌ Already submitted for this student");
+  } else if (response === "SUCCESS") {
+    alert("✅ Submitted successfully");
+    document.querySelector("form").reset(); // 🔄 RESET FORM
+    populateStudents(); // reset dropdowns
+  }
+
+  submitted = false;
+}
+</script>
 </body>
 </html>
