@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>talkSTEM Judging Sheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; padding:15px; }
+    .box { background:#fff; padding:15px; border-radius:8px; max-width:1100px; margin:auto; }
+    h2 { text-align:center; }
+    label { font-weight:bold; }
+    select { padding:6px; }
+    table { width:100%; border-collapse:collapse; margin-top:15px; }
+    th, td { border:1px solid #ccc; padding:6px; text-align:center; }
+    th { background:#eef1f5; }
+    button { padding:12px 25px; font-size:16px; background:#007bff; color:#fff; border:none; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+<h2>talkSTEM Judging Sheet – Class 1A</h2>
+
+<form 
+  action="https://script.google.com/macros/s/AKfycbweLOg_tLfkXu4hS3cL7wsOtcu47W7W9yiJAPR6bx4-EBQ9GGxlBPqmsHPRfkkGZ4oBKg/exec"
+  method="POST"
+  target="hiddenFrame"
+  onsubmit="submitted()"
+>
+
+<!-- Judge -->
+<label>Judge Name</label><br>
+<select name="judge_name" required>
+  <option value="">Select Judge</option>
+  <option>Subhalakshmi</option>
+  <option>Vanamalini</option>
+  <option>Ananthapriya</option>
+</select>
+
+<!-- Fixed Class -->
+<input type="hidden" name="class_section" value="1A">
+
+<!-- Table -->
+<table>
+<tr>
+  <th>Student Name</th>
+  <th>Subject</th>
+  <th>Marks</th>
+</tr>
+
+<tr>
+  <td>
+    <select name="student_name" required>
+      <option value="">Select Student</option>
+      <option>ADHYA KARTHICK</option>
+      <option>ASHMITHA SHREE.R</option>
+      <option>MITHRAA PRADEEP</option>
+      <option>PREKSHA.A</option>
+      <option>RIHANNA.J</option>
+      <option>SAI JOSHIKAA</option>
+      <option>K.SAI RAGHAVEE SRI</option>
+      <option>S.SAISREE</option>
+      <option>SATHVIKHA.D</option>
+      <option>SHRADHA. V. ATHREYA</option>
+      <option>TASHVI CHHAJER</option>
+      <option>K.VIJAYAMEGHAA</option>
+      <option>WAMIKA MANU</option>
+      <option>ADVAITH BODDUKURU</option>
+      <option>AMARDEV SARAVANAN</option>
+      <option>ARJUN NARASIMHAN - KARE</option>
+      <option>P.DHRUVA</option>
+      <option>KA.HARDIK DEV</option>
+      <option>MOKSHITH.S</option>
+      <option>J.MUTHU SAYURESH</option>
+      <option>NIMESH.R.V</option>
+      <option>C.NITHIN</option>
+      <option>S.RAGHAVA SIMHAN(KARE)</option>
+      <option>S.P.RAGHU NANDHAN</option>
+      <option>S.SAI MITHRESH</option>
+    </select>
+  </td>
+
+  <td>
+    <select name="subject" required>
+      <option>Math</option>
+      <option>Science</option>
+    </select>
+  </td>
+
+  <td>
+    <select name="marks" required>
+      <option>AB</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </td>
+</tr>
+</table>
+
+<br>
+<button type="submit">Submit</button>
+
+</form>
+
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
+</div>
+
+<script>
+function submitted(){
+  alert("✅ Submitted successfully");
+}
+</script>
+
+</body>
+</html>
