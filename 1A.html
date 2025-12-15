@@ -19,12 +19,11 @@
 <div class="box">
 <h2>talkSTEM Judging Sheet – Class 1A</h2>
 
-<form
-  action="https://script.google.com/macros/s/AKfycbwEcA3uhCoDWFVV96O5oWVlmXbrziEzq0IgTX_R90fdm2-ZbIR7kvyhSP9c5vuMq3Iz/exec"
+<<form
+  action="https://script.google.com/macros/s/AKfycbx563EAHMCoDrl-yDndaJk4ya9e3PM0thrYdyZAwDMpygDpS0DkY8GhZNFK1C6G_tNU/exec"
   method="POST"
-  target="hiddenFrame"
-  onsubmit="handleSubmit()"
 >
+
 
 
 <label>Judge Name</label>
@@ -164,28 +163,20 @@ function submitted() {
 populateStudents();
 </script>
 <script>
-let submitted = false;
+const params = new URLSearchParams(window.location.search);
 
-function handleSubmit() {
-  submitted = true;
+if (params.get("status") === "success") {
+  alert("✅ Submitted successfully");
+  document.querySelector("form").reset();
+  populateStudents();
+  history.replaceState({}, document.title, window.location.pathname);
 }
 
-function handleResponse() {
-  if (!submitted) return;
-
-  const iframe = document.getElementsByName("hiddenFrame")[0];
-  const response = iframe.contentDocument.body.innerText;
-
-  if (response === "ALREADY_SUBMITTED") {
-    alert("❌ Already submitted for this student");
-  } else if (response === "SUCCESS") {
-    alert("✅ Submitted successfully");
-    document.querySelector("form").reset(); // 🔄 RESET FORM
-    populateStudents(); // reset dropdowns
-  }
-
-  submitted = false;
+if (params.get("status") === "duplicate") {
+  alert("❌ Already submitted for this student");
+  history.replaceState({}, document.title, window.location.pathname);
 }
 </script>
+
 </body>
 </html>
