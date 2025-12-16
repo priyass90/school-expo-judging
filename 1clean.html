@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>talkSTEM Judging Sheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; background:#f4f6f8; padding:15px; }
+    .box { background:#fff; padding:15px; border-radius:8px; max-width:1200px; margin:auto; }
+    h2 { text-align:center; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { border:1px solid #ccc; padding:6px; text-align:center; }
+    th { background:#eef1f5; }
+    select, input { width:100%; padding:6px; }
+    button { padding:10px 25px; background:#007bff; color:white; border:none; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+<h2>talkSTEM Judging Sheet – Class 1A</h2>
+
+<form
+  action="https://script.google.com/macros/s/AKfycbx563EAHMCoDrl-yDndaJk4ya9e3PM0thrYdyZAwDMpygDpS0DkY8GhZNFK1C6G_tNU/exec"
+  method="POST"
+>
+
+
+
+<label>Judge Name</label>
+<select name="judge_name" required>
+  <option value="">Select Judge</option>
+  <option>subhalakshmi</option>
+  <option>Vanamalini</option>
+  <option>Ananthapriya</option>
+</select>
+
+<input type="hidden" name="class_section" value="1A">
+
+<table>
+<tr>
+  <th>Student</th>
+  <th>Subject</th>
+  <th>Rubric 1</th>
+  <th>Rubric 2</th>
+  <th>Rubric 3</th>
+  <th>Total</th>
+</tr>
+
+<!-- ROW 1 -->
+<tr>
+<td>
+<select class="studentSelect" name="student1" onchange="updateStudents()"></select>
+</td>
+<td>
+<select name="subject1">
+  <option>Math</option>
+  <option>Science</option>
+</select>
+</td>
+<td><select name="r1_1" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r1_2" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r1_3" onchange="calcTotal(1)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><input name="total1" id="total1" readonly></td>
+</tr>
+
+<!-- ROW 2 -->
+<tr>
+<td>
+<select class="studentSelect" name="student2" onchange="updateStudents()"></select>
+</td>
+<td>
+<select name="subject2">
+  <option>Math</option>
+  <option>Science</option>
+</select>
+</td>
+<td><select name="r2_1" onchange="calcTotal(2)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r2_2" onchange="calcTotal(2)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r2_3" onchange="calcTotal(2)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><input name="total2" id="total2" readonly></td>
+</tr>
+
+<!-- ROW 3 -->
+<tr>
+<td>
+<select class="studentSelect" name="student3" onchange="updateStudents()"></select>
+</td>
+<td>
+<select name="subject3">
+  <option>Math</option>
+  <option>Science</option>
+</select>
+</td>
+<td><select name="r3_1" onchange="calcTotal(3)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r3_2" onchange="calcTotal(3)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><select name="r3_3" onchange="calcTotal(3)">AB<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+<td><input name="total3" id="total3" readonly></td>
+</tr>
+
+</table>
+
+<br>
+<button type="submit">Submit</button>
+</form>
+
+</div>
+
+<script>
+/* STUDENT LIST */
+const students = [
+  "ADHYA KARTHICK","ASHMITHA SHREE.R","MITHRAA PRADEEP","PREKSHA.A","RIHANNA.J",
+  "SAI JOSHIKAA","K.SAI RAGHAVEE SRI","S.SAISREE","SATHVIKHA.D",
+  "SHRADHA. V. ATHREYA","TASHVI CHHAJER","K.VIJAYAMEGHAA","WAMIKA MANU",
+  "ADVAITH BODDUKURU","AMARDEV SARAVANAN","ARJUN NARASIMHAN - KARE",
+  "P.DHRUVA","KA.HARDIK DEV","MOKSHITH.S","J.MUTHU SAYURESH",
+  "NIMESH.R.V","C.NITHIN","S.RAGHAVA SIMHAN(KARE)","S.P.RAGHU NANDHAN",
+  "S.SAI MITHRESH"
+];
+
+function populateStudents() {
+  document.querySelectorAll(".studentSelect").forEach(sel => {
+    sel.innerHTML = '<option value="">Select Student</option>';
+    students.forEach(s => {
+      const o = document.createElement("option");
+      o.value = s; o.textContent = s;
+      sel.appendChild(o);
+    });
+  });
+}
+
+function updateStudents() {
+  const selected = Array.from(document.querySelectorAll(".studentSelect"))
+    .map(s => s.value).filter(v => v !== "");
+
+  document.querySelectorAll(".studentSelect").forEach(sel => {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Select Student</option>';
+    students.forEach(s => {
+      if (!selected.includes(s) || s === cur) {
+        const o = document.createElement("option");
+        o.value = s; o.textContent = s;
+        if (s === cur) o.selected = true;
+        sel.appendChild(o);
+      }
+    });
+  });
+}
+
+function calcTotal(n) {
+  let t = 0;
+  for (let i = 1; i <= 3; i++) {
+    const v = document.querySelector(`[name=r${n}_${i}]`).value;
+    if (v !== "AB") t += Number(v);
+  }
+  document.getElementById("total" + n).value = t;
+}
+
+populateStudents();
+</script>
+<script>
+const params = new URLSearchParams(window.location.search);
+
+if (params.get("status") === "success") {
+  alert("✅ Submitted successfully");
+  document.querySelector("form").reset();
+  populateStudents();
+  history.replaceState({}, document.title, window.location.pathname);
+}
+
+if (params.get("status") === "duplicate") {
+  alert("❌ Already submitted for this student");
+  history.replaceState({}, document.title, window.location.pathname);
+}
+</script>
+
+</body>
+</html>
