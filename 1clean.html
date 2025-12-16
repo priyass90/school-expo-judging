@@ -19,10 +19,7 @@
 <div class="box">
 <h2>talkSTEM Judging Sheet – Class 1A</h2>
 
-<form
-  action="https://script.google.com/macros/s/AKfycbxYxauEmEHM94WAJZAxiIkDLcZYLVMxnVvOqTwRbgZ3HzIpVIpRQl8hgQxMLfbhloo6/exec"
-  method="POST"
->
+<form id="judgeForm">
 
 
 
@@ -171,6 +168,34 @@ if (params.get("status") === "duplicate") {
   alert("❌ Already submitted for this student");
   history.replaceState({}, document.title, window.location.pathname);
 }
+</script>
+<script>
+document.getElementById("judgeForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  fetch("https://script.google.com/macros/s/AKfycbxYxauEmEHM94WAJZAxiIkDLcZYLVMxnVvOqTwRbgZ3HzIpVIpRQl8hgQxMLfbhloo6/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(result => {
+    if (result === "SUCCESS") {
+      alert("✅ Submitted successfully");
+      form.reset();
+      populateStudents();
+    } else if (result === "DUPLICATE") {
+      alert("❌ Already submitted for this student");
+    } else {
+      alert("⚠️ Unknown response");
+    }
+  })
+  .catch(() => {
+    alert("❌ Submission failed");
+  });
+});
 </script>
 
 </body>
