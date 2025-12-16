@@ -103,7 +103,6 @@
 <button type="submit">Submit</button>
 </form>
 
-<iframe name="hiddenFrame" style="display:none;" onload="handleResponse()"></iframe>
 </div>
 
 <script>
@@ -154,10 +153,6 @@ function calcTotal(n) {
     if (v !== "AB") t += Number(v);
   }
   document.getElementById("total" + n).value = t;
-}
-
-function submitted() {
-  alert("✅ Submitted successfully");
 }
 
 populateStudents();
