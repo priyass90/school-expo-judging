@@ -175,24 +175,30 @@ window.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("judgeForm");
 
   form.addEventListener("submit", function (e) {
-    e.preventDefault();   // STOP normal form submit
+    e.preventDefault();
 
     const formData = new FormData(form);
 
+    // Fire-and-forget POST
     fetch("https://script.google.com/macros/s/AKfycbySQoPUbqj31LCJicT59OiQFIlhjEVaWByAhGkjeAC7skgKfJWg1EA9L2FG5Nd1EUjf/exec", {
       method: "POST",
       body: formData,
-      mode: "no-cors"   // ⭐ THIS IS THE KEY
+      mode: "no-cors",
+      keepalive: true   // ⭐ IMPORTANT
     });
 
-    // We cannot read response in no-cors mode
     alert("✅ Submitted successfully");
-    form.reset();
-    populateStudents();
+
+    // ⏳ Delay reset so request is sent properly
+    setTimeout(() => {
+      form.reset();
+      populateStudents();
+    }, 300); // 300 ms is enough
   });
 
 });
 </script>
+
 
 
 </body>
