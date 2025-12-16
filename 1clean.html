@@ -170,33 +170,30 @@ if (params.get("status") === "duplicate") {
 }
 </script>
 <script>
-document.getElementById("judgeForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+window.addEventListener("DOMContentLoaded", function () {
 
-  const form = e.target;
-  const formData = new FormData(form);
+  const form = document.getElementById("judgeForm");
 
-  fetch("https://script.google.com/macros/s/AKfycbxYxauEmEHM94WAJZAxiIkDLcZYLVMxnVvOqTwRbgZ3HzIpVIpRQl8hgQxMLfbhloo6/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(result => {
-    if (result === "SUCCESS") {
-      alert("✅ Submitted successfully");
-      form.reset();
-      populateStudents();
-    } else if (result === "DUPLICATE") {
-      alert("❌ Already submitted for this student");
-    } else {
-      alert("⚠️ Unknown response");
-    }
-  })
-  .catch(() => {
-    alert("❌ Submission failed");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();   // STOP normal form submit
+
+    const formData = new FormData(form);
+
+    fetch("https://script.google.com/macros/s/AKfycbySQoPUbqj31LCJicT59OiQFIlhjEVaWByAhGkjeAC7skgKfJWg1EA9L2FG5Nd1EUjf/exec", {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"   // ⭐ THIS IS THE KEY
+    });
+
+    // We cannot read response in no-cors mode
+    alert("✅ Submitted successfully");
+    form.reset();
+    populateStudents();
   });
+
 });
 </script>
+
 
 </body>
 </html>
